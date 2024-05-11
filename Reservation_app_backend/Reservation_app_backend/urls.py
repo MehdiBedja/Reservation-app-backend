@@ -22,5 +22,7 @@ from parking_info_app.views import get_parkings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('parkings/', include('parking_info_app.urls')),  # Include app-specific URLs
+    path('reservations/', include('reservation_payment_app.urls')),  # Include your app's URL configuration
+
 
 ]

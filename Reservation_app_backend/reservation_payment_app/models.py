@@ -4,8 +4,10 @@ from django.db import models
 from accounts_app.models import CustomUser
 from parking_info_app.models import Parking
 
+
 class ParkingPlace(models.Model):
     attributes = models.TextField()
+    available = models.BooleanField(default=True)  # New field
     parking = models.ForeignKey(Parking, on_delete=models.CASCADE, related_name='parking_places')
 
 class Reservation(models.Model):

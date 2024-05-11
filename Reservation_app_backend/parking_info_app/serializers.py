@@ -12,3 +12,12 @@ class ParkingSerializer(serializers.ModelSerializer):
 
     def get_commune_name(self, obj):
         return obj.commune.name if obj.commune else None
+
+
+
+class ParkingWithIdSerializer(serializers.ModelSerializer):
+    commune_name = serializers.CharField(source='commune.name')  # Use source to access related field
+
+    class Meta:
+        model = Parking
+        fields = ['id', 'name', 'description', 'commune_name', 'image']
