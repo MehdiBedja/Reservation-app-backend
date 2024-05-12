@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 
 from accounts_app.models import CustomUser
-from accounts_app.serializers import CustomUserSerializer
+from accounts_app.serializers import UserSerializer
 from parking_info_app.serializers import ParkingSerializer
 from .serializers import ParkingPlaceSerializer, ReservationSerializer, ReservationSerializer2
 from .models import ParkingPlace, Reservation

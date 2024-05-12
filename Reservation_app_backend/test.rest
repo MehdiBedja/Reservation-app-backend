@@ -1,0 +1,48 @@
+POST http://127.0.0.1:8000/user/login 
+Content-Type: application/json
+
+{ "username": "admin", "password": "admin" }
+
+###
+
+POST http://127.0.0.1:8000/user/signup 
+Content-Type: application/json
+
+{
+  "user_type": "client",
+  "user": {
+    "email": "fournisseur16@example.com",
+    "username": "fournisseur16",
+    "last_name": "John",
+    "first_name": "Doe",
+    "phone_number": "1234567890",
+    "password": "1234"
+  }
+}
+
+
+###
+
+GET http://127.0.0.1:8000/user/get_user_info
+Content-Type: application/json
+Authorization: token 4bb61ff80fe697ec41706cbdbdf9f373cb7cae56
+
+
+
+
+###
+
+POST http://127.0.0.1:8000/user/change_password 
+Content-Type: application/json
+Authorization: Token 7200e277f57dd53c80a098e026aa022b4915b556
+
+{
+  "old_password": "1234",
+  "new_password": "12345"
+}
+
+
+###
+
+POST http://127.0.0.1:8000/user/logout
+Authorization: Token 7200e277f57dd53c80a098e026aa022b4915b556

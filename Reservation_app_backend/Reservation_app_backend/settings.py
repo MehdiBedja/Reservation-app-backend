@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,13 +29,17 @@ SECRET_KEY = 'django-insecure-ecs32g_+n067z%(m=+3!a%f1ov4l$v@t=7j7p6d6-n8jo@pj+6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8f24-154-121-84-21.ngrok-free.app', 'localhost' ,'127.0.0.1', '::1']
+ALLOWED_HOSTS = [os.getenv('NGROK_ADDRESS'), 'localhost' ,'127.0.0.1', '::1']
 
 
 
 # Application definition
 
 INSTALLED_APPS = [
+
+    'allauth',
+    'allauth.account',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +49,38 @@ INSTALLED_APPS = [
     'accounts_app',
     'parking_info_app',
     'reservation_payment_app',
+
+    'allauth.socialaccount.providers.google',
+    'django.contrib.sites',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
 ]
+
+AUTH_USER_MODEL = 'accounts_app.CustomUser'
+
+
+SITE_ID=1 #see later for what is that?
+
+
+AUTHENTICATION_BACKENDS = [
+
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +90,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    
+        #
+    'corsheaders.middleware.CorsMiddleware',
+
+     # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'Reservation_app_backend.urls'
@@ -79,12 +125,12 @@ WSGI_APPLICATION = 'Reservation_app_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'parkingDatabase',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',  # Or your MySQL server IP address
-        'PORT': '3306',  # MySQL default port
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
@@ -141,5 +187,7 @@ STATICFILES_DIRS = [
 ]
 
 
+#ID client :  342366582123-2r7cbdes5eitpp3ssr37t1n1s6lbjo8c.apps.googleusercontent.com
 
-AUTH_USER_MODEL = 'accounts_app.CustomUser'
+#code secret : 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
+
