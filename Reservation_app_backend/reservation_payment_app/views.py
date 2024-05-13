@@ -7,9 +7,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 
 from accounts_app.models import CustomUser
-from accounts_app.serializers import UserSerializer
 from parking_info_app.serializers import ParkingSerializer
-from .serializers import ParkingPlaceSerializer, ReservationSerializer, ReservationSerializer2
+from .serializers import ParkingPlaceSerializer, ReservationSerializer, ReservationSerializer2, ReservationSerializer3
 from .models import ParkingPlace, Reservation
 
 @api_view(['POST'])
@@ -45,7 +44,7 @@ def reservation_details(request, reservation_id):
 @api_view(['POST'])
 def create_reservation(request):
     if request.method == 'POST':
-        serializer = ReservationSerializer2(data=request.data)
+        serializer = ReservationSerializer3(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse({"message": "Reservation created successfully."}, status=status.HTTP_201_CREATED)
@@ -74,3 +73,14 @@ def available_parking_places(request, parking_id):
         return JsonResponse(serialized_data, safe=False)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+
+@api_view(['GET'])
+def get_reservation_by_id(request, pk):
+    try:
+        reservation = Reservation.objects.get(pk=pk)
+    except Reservation.DoesNotExist:
+        return JsonResponse({'error': 'Reservation not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ReservationSerializer2(reservation)
+    return JsonResponse(serializer.data, status=status.HTTP_200_OK)

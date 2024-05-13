@@ -33,5 +33,7 @@ class AdministratorSerializer(serializers.ModelSerializer):
         fields = ['id', 'user']
 
 
-
-
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email', 'profile_picture']

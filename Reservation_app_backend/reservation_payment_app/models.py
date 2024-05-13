@@ -14,8 +14,8 @@ class Reservation(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reservations')
     parking_place = models.ForeignKey(ParkingPlace, on_delete=models.CASCADE, related_name='reservations')
     reservation_date = models.DateTimeField(auto_now_add=True)
-    entry_datetime = models.DateTimeField()
-    exit_datetime = models.DateTimeField()
+    entry_datetime = models.CharField(max_length=50)
+    exit_datetime = models.CharField(max_length=50)
     payment_status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('completed', 'Completed')], default='pending')
     reservation_code = models.CharField(max_length=50, unique=True)
 
