@@ -23,8 +23,8 @@ def create_reservation(request):
 
 
 @api_view(['GET'])
-def get_reservations(request, user_id=None):
-    user = get_object_or_404(CustomUser, pk=user_id)
+def get_reservations(request, id=None):
+    user = get_object_or_404(CustomUser, id=id)
     reservations = Reservation.objects.filter(user=user)
     serializer = ReservationSerializer(reservations, many=True)
     return JsonResponse(serializer.data, safe=False)

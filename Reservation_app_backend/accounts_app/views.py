@@ -82,6 +82,17 @@ def get_user_info(request):
 
 
 
+@api_view(['GET'])
+def custom_user_detail(request, id):
+    try:
+        user = CustomUser.objects.get(pk=id)
+    except CustomUser.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = CustomUserSerializer2(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

@@ -9,5 +9,7 @@ urlpatterns = [
     re_path('get_user_info', views.get_user_info),
     re_path('change_password', views.change_password),
     re_path('logout', views.logout),
+
+    re_path(r'^getUser/(?P<id>\d+)/$', views.custom_user_detail, name='customuser-detail'),
     # re_path('test_token', views.test_token)
 ]

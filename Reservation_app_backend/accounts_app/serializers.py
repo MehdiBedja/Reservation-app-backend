@@ -37,3 +37,13 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'email', 'profile_picture']
+
+
+class CustomUserSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = [
+            'id', 'username', 'email', 'last_name', 
+            'first_name', 'phone_number', 'date_of_birth', 
+            'date_joined', 'profile_picture'
+        ]
