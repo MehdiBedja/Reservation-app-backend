@@ -19,12 +19,14 @@ class ParkingSerializer2(serializers.ModelSerializer):
 
     class Meta:
         model = Parking
-        fields = ['id', 'name', 'description', 'commune_name', 'image']
+        fields = ['id', 'name', 'description', 'commune_name', 'image', 'latitude', 'longitude']
 
 
 class ParkingWithIdSerializer(serializers.ModelSerializer):
     commune_name = serializers.CharField(source='commune.name')  # Use source to access related field
+    latitude = serializers.DecimalField(max_digits=9, decimal_places=6, required=False)
+    longitude = serializers.DecimalField(max_digits=9, decimal_places=6, required=False)
 
     class Meta:
         model = Parking
-        fields = ['id', 'name', 'description', 'commune_name', 'image']
+        fields = ['id', 'name', 'description', 'commune_name', 'image', 'latitude', 'longitude']
